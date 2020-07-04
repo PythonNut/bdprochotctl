@@ -1,0 +1,11 @@
+[Unit]
+Description=Disable BD PROCHOT
+Wants=basic.target
+After=basic.target
+
+[Install]
+WantedBy=basic.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/bdprochotctl disable

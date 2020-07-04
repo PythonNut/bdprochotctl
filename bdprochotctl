@@ -1,0 +1,27 @@
+#!/bin/python
+
+import subprocess
+import sys
+
+MSR_ADDRESS = "0x1FC"
+
+msr_value = int(
+    subprocess.check_output(["rdmsr", MSR_ADDRESS]).decode("utf-8").strip(), 16
+)
+
+if sys.argv[1] == "enable":
+    mask = 0x00001
+    new_msr_value = msr_value | mask
+
+elif sys.argv[1] == "disable":
+    mask = 0xFFFFE
+    new_msr_value = msr_value & mask
+
+else:
+    basename = sys.argv[0].split("/")[-1]
+    print(f"{basename} [enable|disable]")
+    sys.exit()
+
+new_msr_hex = f"0x{new_msr_value:05x}"
+print(f"writing {new_msr_hex} to {MSR_ADDRESS}")
+subprocess.run(["wrmsr", MSR_ADDRESS, new_msr_hex])
