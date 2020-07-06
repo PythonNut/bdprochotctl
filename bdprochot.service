@@ -1,11 +1,11 @@
 [Unit]
 Description=Disable BD PROCHOT
 Wants=basic.target
-After=basic.target
+After=basic.target suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target
 
 [Install]
-WantedBy=basic.target
+WantedBy=basic.target suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target
 
 [Service]
-Type=simple
+Type=oneshot
 ExecStart=/usr/local/bin/bdprochotctl disable
