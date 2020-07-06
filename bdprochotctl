@@ -17,9 +17,17 @@ elif sys.argv[1] == "disable":
     mask = 0xFFFFE
     new_msr_value = msr_value & mask
 
+elif sys.argv[1] == "status":
+    mask = 0x00001
+    if msr_value & mask:
+        print("BD PROCHOT is enabled")
+    else:
+        print("BD PROCHOT is disabled")
+    sys.exit()
+
 else:
     basename = sys.argv[0].split("/")[-1]
-    print(f"{basename} [enable|disable]")
+    print(f"{basename} [enable|disable|status]")
     sys.exit()
 
 new_msr_hex = f"0x{new_msr_value:05x}"
